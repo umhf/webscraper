@@ -1,0 +1,41 @@
+---
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <button class="g-recaptcha" data-sitekey="PUBLIC_SITE_KEY" data-callback="onSubmit" data-action="submit">
+      Click me to verify the captcha challenge!
+    </button>
+    <div class="list"></div>
+
+    <script is:inline>
+      onSubmit();
+      function onSubmit() {
+        fetch("/api/test", {
+          method: "GET",
+        })
+          .then((response) => {
+            console.log(response);
+            return response.json();
+          })
+          .then((gResponse) => {
+            if (gResponse.success) {
+              // Captcha verification was a success
+              console.log(gResponse);
+            } else {
+              console.log(gResponse);
+              document.querySelector(".list").innerText = gResponse.hallo[1];
+              // Captcha verification failed
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
